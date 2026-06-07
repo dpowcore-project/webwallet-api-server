@@ -157,7 +157,10 @@ ExecStart=/opt/bitweb-api/venv/bin/gunicorn \
     --worker-class gevent \
     --workers 1 \
     --timeout 0 \
+    --keep-alive 75 \
     app:app
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
