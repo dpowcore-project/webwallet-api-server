@@ -59,7 +59,7 @@ except ValueError:
     ok("bad checksum raises ValueError")
 
 # ---------------------------------------------------------------------------
-# Build a custom address with version 0x21 (Bitweb mainnet P2PKH) and round-trip
+# Build a custom address with version 0x37 (Dpowcoin mainnet P2PKH) and round-trip
 # ---------------------------------------------------------------------------
 print()
 print("=== custom version bytes ===")
@@ -82,10 +82,10 @@ def _make_b58_address(version_byte: int, hash160: bytes) -> str:
 
 
 for version, expected_script_prefix in [
-    (0x21, "76a914"),   # Bitweb mainnet P2PKH
-    (0x1E, "a914"),     # Bitweb mainnet P2SH
-    (0x42, "76a914"),   # Bitweb testnet P2PKH
-    (0x80, "a914"),     # Bitweb testnet P2SH
+    (0x37, "76a914"),   # Dpowocoin mainnet P2PKH
+    (0x1C, "a914"),     # Dpowcoin mainnet P2SH
+    (0x42, "76a914"),   # Dpowcoin testnet P2PKH
+    (0x80, "a914"),     # Dpowcoin testnet P2SH
 ]:
     h = bytes(range(20))
     addr = _make_b58_address(version, h)

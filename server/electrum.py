@@ -16,7 +16,7 @@ import time
 
 log = logging.getLogger(__name__)
 
-CLIENT_NAME    = "BitwebWallet"
+CLIENT_NAME    = "DpowcoinWallet"
 CLIENT_VERSION = "1.0"
 PROTOCOL_MIN   = "1.4"
 PROTOCOL_MAX   = "1.4"

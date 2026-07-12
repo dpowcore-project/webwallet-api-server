@@ -1,6 +1,6 @@
-# Bitweb API Server
+# Dpowcoin API Server
 
-REST + WebSocket backend for the Bitweb wallet. Bridges HTTP/WS clients to an
+REST + WebSocket backend for the Dpowcoin wallet. Bridges HTTP/WS clients to an
 [ElectrumX](https://github.com/spesmilo/electrumx) node over TLS, providing
 address balances, UTXO sets, transaction history, and real-time push
 notifications via Socket.IO.
@@ -102,21 +102,21 @@ python-dotenv
 ### 1. Create a dedicated user
 
 ```bash
-sudo useradd -r -m -s /bin/bash bitweb
+sudo useradd -r -m -s /bin/bash dpowcoin
 ```
 
 ### 2. Clone / copy the project
 
 ```bash
-sudo mkdir -p /opt/bitweb-api
-sudo cp -r . /opt/bitweb-api/
-sudo chown -R bitweb:bitweb /opt/bitweb-api
+sudo mkdir -p /opt/dpowcoin-api
+sudo cp -r . /opt/dpowcoin-api/
+sudo chown -R dpowcoin:dpowcoin /opt/dpowcoin-api
 ```
 
 ### 3. Create a virtual environment and install dependencies
 
 ```bash
-  cd /opt/bitweb-api
+  cd /opt/dpowcoin-api
   python3 -m venv venv
   venv/bin/pip install --upgrade pip
   venv/bin/pip install -r requirements.txt
@@ -127,10 +127,10 @@ sudo chown -R bitweb:bitweb /opt/bitweb-api
 Copy the example and edit:
 
 ```bash
-sudo cp /opt/bitweb-api/env.example /opt/bitweb-api/.env
-sudo nano /opt/bitweb-api/.env
-sudo chown bitweb:bitweb /opt/bitweb-api/.env
-sudo chmod 600 /opt/bitweb-api/.env
+sudo cp /opt/dpowcoin-api/env.example /opt/dpowcoin-api/.env
+sudo nano /opt/dpowcoin-api/.env
+sudo chown dpowcoin:dpowcoin /opt/dpowcoin-api/.env
+sudo chmod 600 /opt/dpowcoin-api/.env
 ```
 
 See [Configuration](#configuration) for all available variables.
@@ -138,21 +138,21 @@ See [Configuration](#configuration) for all available variables.
 ### 5. Create the systemd service
 
 ```bash
-sudo nano /etc/systemd/system/bitweb-api.service
+sudo nano /etc/systemd/system/dpowcoin-api.service
 ```
 
 ```ini
 [Unit]
-Description=Bitweb API Server
+Description=Dpowcoin API Server
 After=network.target
 
 [Service]
-User=bitweb
-Group=bitweb
-WorkingDirectory=/opt/bitweb-api
-EnvironmentFile=/opt/bitweb-api/.env
-Environment="PATH=/opt/bitweb-api/venv/bin"
-ExecStart=/opt/bitweb-api/venv/bin/gunicorn \
+User=dpowcoin
+Group=dpowcoin
+WorkingDirectory=/opt/dpowcoin-api
+EnvironmentFile=/opt/dpowcoin-api/.env
+Environment="PATH=/opt/dpowcoin-api/venv/bin"
+ExecStart=/opt/dpowcoin-api/venv/bin/gunicorn \
     --bind 127.0.0.1:21223 \
     --worker-class gevent \
     --workers 1 \
@@ -168,17 +168,17 @@ WantedBy=multi-user.target
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now bitweb-api
-sudo systemctl status bitweb-api
+sudo systemctl enable --now dpowcoin-api
+sudo systemctl status dpowcoin-api
 ```
 
 ### 6. Configure Nginx
 
-See the included `api2.bitwebcore.example` for a production-ready Nginx config.
+See the included `api2.dpowcoincore.example` for a production-ready Nginx config.
 Replace `api.example.com` with your domain.
 
 ```bash
-sudo cp api2.bitwebcore.example /etc/nginx/conf.d/bitweb-api.conf
+sudo cp api2.dpowcoincore.example /etc/nginx/conf.d/dpowcoin-api.conf
 # edit domain
 sudo nginx -t && sudo systemctl reload nginx
 ```
@@ -227,7 +227,7 @@ FIXED_FEE_SATOSHIS=10000
 ```
 
 > **Security note:** `.env` contains secrets. It is owned by the service user
-> (`bitweb`) with mode `600` and must never be committed to version control.
+> (`dpowcoin`) with mode `600` and must never be committed to version control.
 > Add `.env` to `.gitignore`.
 
 ---
@@ -237,18 +237,18 @@ FIXED_FEE_SATOSHIS=10000
 ### Via systemd (production)
 
 ```bash
-sudo systemctl start bitweb-api
-sudo systemctl stop bitweb-api
-sudo systemctl restart bitweb-api
-sudo systemctl status bitweb-api
+sudo systemctl start dpowcoin-api
+sudo systemctl stop dpowcoin-api
+sudo systemctl restart dpowcoin-api
+sudo systemctl status dpowcoin-api
 ```
 
 ### Logs
 
 ```bash
-sudo journalctl -u bitweb-api -f          # follow live
-sudo journalctl -u bitweb-api -n 100      # last 100 lines
-sudo journalctl -u bitweb-api --since today
+sudo journalctl -u dpowcoin-api -f          # follow live
+sudo journalctl -u dpowcoin-api -n 100      # last 100 lines
+sudo journalctl -u dpowcoin-api --since today
 ```
 
 ### Development (local)

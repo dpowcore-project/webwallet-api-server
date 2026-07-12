@@ -5,9 +5,9 @@ import base58 as _b58
 
 __all__ = ["address_to_scriptpubkey", "address_to_scripthash"]
 
-_BECH32_HRPS    = frozenset(["web"])
-_P2PKH_VERSIONS = frozenset([0x21, 0x42])
-_P2SH_VERSIONS  = frozenset([0x1E, 0x80])
+_BECH32_HRPS    = frozenset(["dpc"])
+_P2PKH_VERSIONS = frozenset([0x37, 0x42])
+_P2SH_VERSIONS  = frozenset([0x1C, 0x80])
 
 
 def is_bech32_address(addr: str) -> bool:

@@ -1,6 +1,6 @@
-limit_req_zone $binary_remote_addr zone=bitweb_api:10m rate=300r/m;
-limit_req_zone $binary_remote_addr zone=bitweb_broadcast:10m rate=20r/m;
-limit_req_zone $binary_remote_addr zone=bitweb_ws:10m rate=10r/m;
+limit_req_zone $binary_remote_addr zone=dpowcoin_api:10m rate=300r/m;
+limit_req_zone $binary_remote_addr zone=dpowcoin_broadcast:10m rate=20r/m;
+limit_req_zone $binary_remote_addr zone=dpowcoin_ws:10m rate=10r/m;
 
 server {
     server_name api.example.com;
@@ -45,7 +45,7 @@ server {
     }
 
     location = /info {
-        limit_req zone=bitweb_api burst=200 nodelay;
+        limit_req zone=dpowcoin_api burst=200 nodelay;
         proxy_pass         http://127.0.0.1:21223;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
@@ -53,7 +53,7 @@ server {
     }
 
     location = /fee {
-        limit_req zone=bitweb_api burst=200 nodelay;
+        limit_req zone=dpowcoin_api burst=200 nodelay;
         proxy_pass         http://127.0.0.1:21223;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
@@ -61,7 +61,7 @@ server {
     }
 
     location ~ "^/balance/[a-zA-Z0-9]{25,90}$" {
-        limit_req zone=bitweb_api burst=200 nodelay;
+        limit_req zone=dpowcoin_api burst=200 nodelay;
         proxy_pass         http://127.0.0.1:21223;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
@@ -69,7 +69,7 @@ server {
     }
 
     location ~ "^/unspent/[a-zA-Z0-9]{25,90}$" {
-        limit_req zone=bitweb_api burst=200 nodelay;
+        limit_req zone=dpowcoin_api burst=200 nodelay;
         proxy_pass         http://127.0.0.1:21223;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
@@ -77,7 +77,7 @@ server {
     }
 
     location ~ "^/history/[a-zA-Z0-9]{25,90}$" {
-        limit_req zone=bitweb_api burst=200 nodelay;
+        limit_req zone=dpowcoin_api burst=200 nodelay;
         proxy_pass         http://127.0.0.1:21223;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
@@ -85,7 +85,7 @@ server {
     }
 
     location ~ "^/tx/[0-9a-fA-F]{64}$" {
-        limit_req zone=bitweb_api burst=200 nodelay;
+        limit_req zone=dpowcoin_api burst=200 nodelay;
         proxy_pass         http://127.0.0.1:21223;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
@@ -93,7 +93,7 @@ server {
     }
 
     location ~ "^/rawtx/[0-9a-fA-F]{64}$" {
-        limit_req zone=bitweb_api burst=200 nodelay;
+        limit_req zone=dpowcoin_api burst=200 nodelay;
         proxy_pass         http://127.0.0.1:21223;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
@@ -101,7 +101,7 @@ server {
     }
 
     location = /broadcast {
-        limit_req zone=bitweb_broadcast burst=10 nodelay;
+        limit_req zone=dpowcoin_broadcast burst=10 nodelay;
         client_max_body_size 100k;
         proxy_pass           http://127.0.0.1:21223;
         proxy_set_header     X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -110,7 +110,7 @@ server {
     }
 
     location /socket.io/ {
-        limit_req zone=bitweb_ws burst=20 nodelay;
+        limit_req zone=dpowcoin_ws burst=20 nodelay;
         proxy_pass             http://127.0.0.1:21223;
         proxy_http_version     1.1;
         proxy_set_header       Upgrade    $http_upgrade;
