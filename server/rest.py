@@ -254,7 +254,7 @@ def extract_vout_address(vout_entry: dict) -> str | None:
 
 def vout_to_satoshis(vout_entry: dict) -> int:
     """Convert a vout value (float BTC from ElectrumX verbose TX) to satoshis.
-    Uses string parsing to avoid float64 precision loss at large amounts (>33M BTE).
+    Uses string parsing to avoid float64 precision loss at large amounts (>33M DPC).
     Falls back to round() for edge cases like scientific notation (e.g. 1e-08).
     """
     raw = vout_entry.get("value", 0)

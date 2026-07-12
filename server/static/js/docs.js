@@ -2,19 +2,19 @@
     'use strict';
     // --- Private data ---
     const networkConfigs = {
-        'BTE': { name: 'Main Network (BTE)', api: `${window.location.protocol}//${window.location.host}` }
+        'DPC': { name: 'Main Network (DPC)', api: `${window.location.protocol}//${window.location.host}` }
     };
     const apiMethods = [
         { name: 'GET /info', method: 'GET', id: 'info', desc: 'Current block height. Returns <code>blocks</code>', base: '/info', params: [] },
-        { name: 'GET /balance/<address>', method: 'GET', id: 'balance', desc: 'Confirmed + unconfirmed balance in satoshis. Address: bech32 (web1q...) or base58check.', base: '/balance/', params: [{ title: 'address', key: true, placeholder: 'web1q... or base58 address' }] },
-        { name: 'GET /unspent/<address>', method: 'GET', id: 'unspent', desc: 'UTXO list. Each item includes <code>txid</code>, <code>index</code>, <code>value</code>, <code>height</code>, <code>script</code>, <code>coinbase</code> (bool — true if mined as block reward). Optional <code>?amount=</code> to filter by minimum value (satoshis), <code>?confirmed=true</code> to skip mempool UTXOs.', base: '/unspent/', params: [{ title: 'address', key: true, placeholder: 'web1q... or base58 address' }, { title: 'amount', key: false, placeholder: '0  (min satoshis, optional)' }, { title: 'confirmed', key: false, placeholder: 'true  (optional)' }] },
+        { name: 'GET /balance/<address>', method: 'GET', id: 'balance', desc: 'Confirmed + unconfirmed balance in satoshis. Address: bech32 (dpc1q...) or base58check.', base: '/balance/', params: [{ title: 'address', key: true, placeholder: 'dpc1q... or base58 address' }] },
+        { name: 'GET /unspent/<address>', method: 'GET', id: 'unspent', desc: 'UTXO list. Each item includes <code>txid</code>, <code>index</code>, <code>value</code>, <code>height</code>, <code>script</code>, <code>coinbase</code> (bool — true if mined as block reward). Optional <code>?amount=</code> to filter by minimum value (satoshis), <code>?confirmed=true</code> to skip mempool UTXOs.', base: '/unspent/', params: [{ title: 'address', key: true, placeholder: 'dpc1q... or base58 address' }, { title: 'amount', key: false, placeholder: '0  (min satoshis, optional)' }, { title: 'confirmed', key: false, placeholder: 'true  (optional)' }] },
         { name: 'GET /fee', method: 'GET', id: 'fee', desc: 'Fixed fee rate in satoshis.', base: '/fee', params: [] },
         { name: 'GET /tx/<txid>', method: 'GET', id: 'tx', desc: 'Verbose transaction details. Returns <code>vin</code>, <code>vout</code> (with <code>value_sat</code>), <code>txid</code>, sizes.', base: '/tx/', params: [{ title: 'txid', key: true, placeholder: '64-char transaction id' }] },
-        { name: 'GET /history/<address>', method: 'GET', id: 'history', desc: 'Transaction history for address. Each item: <code>txid</code>, <code>height</code>, <code>timestamp</code> (unix), <code>direction</code> ("in"/"out"/"self"/"unknown"), <code>amount</code> (satoshis), <code>mine_in</code>, <code>mine_out</code>. Optional <code>?limit=</code> (default 10, max 50). <code>height&nbsp;==&nbsp;0</code> = mempool.', base: '/history/', params: [{ title: 'address', key: true, placeholder: 'web1q... or base58 address' }, { title: 'limit', key: false, placeholder: '10  (max 50, optional)' }] },
+        { name: 'GET /history/<address>', method: 'GET', id: 'history', desc: 'Transaction history for address. Each item: <code>txid</code>, <code>height</code>, <code>timestamp</code> (unix), <code>direction</code> ("in"/"out"/"self"/"unknown"), <code>amount</code> (satoshis), <code>mine_in</code>, <code>mine_out</code>. Optional <code>?limit=</code> (default 10, max 50). <code>height&nbsp;==&nbsp;0</code> = mempool.', base: '/history/', params: [{ title: 'address', key: true, placeholder: 'dpc1q... or base58 address' }, { title: 'limit', key: false, placeholder: '10  (max 50, optional)' }] },
         { name: 'GET /rawtx/<txid>', method: 'GET', id: 'rawtx', desc: 'Raw transaction hex string. Used by the web wallet to provide <code>nonWitnessUtxo</code> when signing legacy P2PKH inputs. Returns the raw hex directly as <code>result</code>.', base: '/rawtx/', params: [{ title: 'txid', key: true, placeholder: '64-char transaction id' }] },
         { name: 'POST /broadcast', method: 'POST', id: 'broadcast', desc: 'Broadcast raw transaction hex. Send as form field <code>raw=&lt;hex&gt;</code>.', base: '/broadcast', params: [{ title: 'raw', key: false, placeholder: 'raw transaction hex (0100000...)' }] }
     ];
-    let currentNetworkKey = 'BTE';
+    let currentNetworkKey = 'DPC';
     // --- Cookie helpers ---
     function setCookie(name, value, days) {
         const expires = days ? `; expires=${new Date(Date.now() + days * 864e5).toGMTString()}` : '';
@@ -33,8 +33,8 @@
     }
     // --- Network switcher ---
     function displayNetworks() {
-        const savedNet = getCookie('network') || 'BTE';
-        currentNetworkKey = networkConfigs[savedNet] ? savedNet : 'BTE';
+        const savedNet = getCookie('network') || 'DPC';
+        currentNetworkKey = networkConfigs[savedNet] ? savedNet : 'DPC';
         const toggle = document.querySelector('#network-list .dropdown-toggle');
         if (toggle) toggle.textContent = networkConfigs[currentNetworkKey].name;
 
