@@ -269,7 +269,7 @@ python3 test_address.py
 ```
 
 Tests cover base58check decoding, all version bytes (mainnet/testnet P2PKH and
-P2SH), bech32 P2WPKH/P2WSH with the `web` HRP, and script-hash derivation.
+P2SH), bech32 P2WPKH/P2WSH with the `dpc` HRP, and script-hash derivation.
 
 ---
 

@@ -574,7 +574,7 @@ def get_history(address: str):
 def get_raw_tx(txid: str):
     """
     Return raw transaction hex string.
-    Required by the web wallet for signing legacy P2PKH inputs (nonWitnessUtxo).
+    Required by the dpc wallet for signing legacy P2PKH inputs (nonWitnessUtxo).
     """
     try:
         validate_txid(txid)

@@ -114,23 +114,23 @@ def _bech32_encode(hrp: str, data: list) -> str:
 hash20 = bytes(range(20))
 hash32 = bytes(range(32))
 
-# P2WPKH with 'web' HRP
+# P2WPKH with 'dpc' HRP
 data_p2wpkh = [0] + _convertbits(list(hash20), 8, 5)
-addr_p2wpkh = _bech32_encode("web", data_p2wpkh)
+addr_p2wpkh = _bech32_encode("dpc", data_p2wpkh)
 script = address_to_scriptpubkey(addr_p2wpkh)
 expected = b"\x00\x14" + hash20
 if script != expected:
     fail(f"P2WPKH script mismatch: {script.hex()} vs {expected.hex()}")
-ok(f"web bech32 P2WPKH: {addr_p2wpkh}")
+ok(f"dpc bech32 P2WPKH: {addr_p2wpkh}")
 
-# P2WSH with 'web' HRP
+# P2WSH with 'dpc' HRP
 data_p2wsh = [0] + _convertbits(list(hash32), 8, 5)
-addr_p2wsh = _bech32_encode("web", data_p2wsh)
+addr_p2wsh = _bech32_encode("dpc", data_p2wsh)
 script2 = address_to_scriptpubkey(addr_p2wsh)
 expected2 = b"\x00\x20" + hash32
 if script2 != expected2:
     fail(f"P2WSH script mismatch: {script2.hex()} vs {expected2.hex()}")
-ok(f"web bech32 P2WSH:  {addr_p2wsh}")
+ok(f"dpc bech32 P2WSH:  {addr_p2wsh}")
 
 # Bad checksum
 try:
@@ -147,7 +147,7 @@ print()
 print("=== scripthash ===")
 
 hash20_b = bytes(20)   # all zeros
-addr_zero = _bech32_encode("web", [0] + _convertbits(list(hash20_b), 8, 5))
+addr_zero = _bech32_encode("dpc", [0] + _convertbits(list(hash20_b), 8, 5))
 script_zero = b"\x00\x14" + hash20_b
 expected_sh = hashlib.sha256(script_zero).digest()[::-1].hex()
 got_sh = address_to_scripthash(addr_zero)
